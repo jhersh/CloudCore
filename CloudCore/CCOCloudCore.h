@@ -20,8 +20,6 @@ typedef NS_ENUM(NSUInteger, CCOBindDirection) {
     CCOBindDirectionCloudToLocal,
 };
 
-typedef void (^CCOQueryNotificationBlock) (CKQueryNotification *);
-
 typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBindDirection);
 
 @protocol CCOCloudCoreDelegate;
@@ -104,7 +102,9 @@ typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBin
 
 @property (nonatomic, strong, readonly) NSManagedObjectContext *observedContext;
 
-- (void) registerManagedObjectClass:(Class)class forCloudKitEntity:(NSString *)entity withBindingBlock:(CCOManagedObjectBindBlock)bindingBlock;
+- (void) registerManagedObjectClass:(Class)klass
+                  forCloudKitEntity:(NSString *)entity
+                   withBindingBlock:(CCOManagedObjectBindBlock)bindingBlock;
 
 - (void) startObservingChangesInContext:(NSManagedObjectContext *)context;
 
@@ -113,14 +113,8 @@ typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBin
 #pragma mark - Notifications
 
 /**
- * A block called when your application receives a remote notification
- * that a CloudKit subscription has been updated.
- */
-@property (nonatomic, copy) CCOQueryNotificationBlock queryNotificationBlock;
-
-/**
  * Parse a remote notification dictionary. The notification will be parsed into
- * a CloudKit notification and your @c queryNotificationBlock will be called.
+ * a CloudKit notification and the proper delegate methods will be called.
  * 
  * @param notification the notification dictionary received by your application delegate.
  * Pass the same dictionary that your app delegate received in 
@@ -132,12 +126,25 @@ typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBin
 
 @protocol CCOCloudCoreDelegate <NSObject>
 
-- (void) cloudCore:(CCOCloudCore *)cloudCore
-accountStatusUpdated:(CKAccountStatus)status
+/**
+ * The account access status has been updated for a database.
+ * 
+ * @param cloudCore the object managing this database
+ * @param status the new account status
+ * @param error any error associated with fetching the status
+ */
+- (void) cloudCore:(CCOCloudCore *)cloudCore accountStatusUpdated:(CKAccountStatus)status
              error:(NSError *)error;
 
-- (void) cloudCore:(CCOCloudCore *)cloudCore
-didSaveRecordsToCloud:(NSArray *)savedRecords
+/**
+ * An update has been received for a CloudKit entity subscription.
+ *
+ * @param cloudCore the object managing this database
+ * @param update the subscription update
+ */
+- (void) cloudCore:(CCOCloudCore *)cloudCore didReceiveSubscriptionUpdate:(CKQueryNotification *)update;
+
+- (void) cloudCore:(CCOCloudCore *)cloudCore didSaveRecordsToCloud:(NSArray *)savedRecords
 deletedRecordsInCloud:(NSArray *)deletedRecordIDs
              error:(NSError *)error;
 

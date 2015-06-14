@@ -9,6 +9,8 @@ CloudCore has two components:
 - Categories on `CKDatabase`, `CKRecord`, `CKQuery`, and other CloudKit objects to assist with querying, serializing and deserializing, and fetching and saving records
 - An adapter object, `CCOCloudCore`, that aims to provide two-way synchronization between your Core Data records locally and your CloudKit records remotely.
 
+CloudCore requires iOS 8.
+
 (A work in progress)
 
 CloudCore is a [Jonathan Hersh](https://github.com/jhersh) production and is available under the MIT license. See the `LICENSE` file for more info.

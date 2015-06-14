@@ -93,17 +93,18 @@ CG_INLINE NSString * CCOStringFromClass(Class class) {
     return [@"CCO" stringByAppendingString:NSStringFromClass(class)];
 };
 
-- (void)registerManagedObjectClass:(Class __nonnull)class
+- (void)registerManagedObjectClass:(Class __nonnull)klass
                  forCloudKitEntity:(NSString * __nonnull)entity
                   withBindingBlock:(CCOManagedObjectBindBlock __nonnull)bindingBlock {
 
-    self.registeredObjects[CCOStringFromClass(class)] = [[CCOCloudManagedObject alloc]
-                                                         initWithClass:class
+    self.registeredObjects[CCOStringFromClass(klass)] = [[CCOCloudManagedObject alloc]
+                                                         initWithClass:klass
                                                          bindBlock:bindingBlock
                                                          cloudKitEntity:entity];
 }
 
-- (NSArray *) _CKRecordsByBindingManagedObjects:(NSArray *)objects inDirection:(CCOBindDirection)direction {
+- (NSArray *) _CKRecordsByBindingManagedObjects:(NSArray *)objects
+                                    inDirection:(CCOBindDirection)direction {
     NSMutableArray *records = [NSMutableArray array];
     
     for (NSManagedObject *object in objects) {
@@ -183,15 +184,18 @@ CG_INLINE NSString * CCOStringFromClass(Class class) {
 - (void)receivedRemoteCloudKitNotification:(nonnull NSDictionary *)notification {
     CKNotification *event = [CKNotification notificationFromRemoteNotificationDictionary:notification];
     
+    if (!event) {
+        return;
+    }
+    
     switch (event.notificationType) {
         case CKNotificationTypeQuery: {
             
             CKQueryNotification *queryEvent = (CKQueryNotification *)event;
             
-            if (self.queryNotificationBlock) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.queryNotificationBlock(queryEvent);
-                });
+            if ([self.delegate respondsToSelector:@selector(cloudCore:didReceiveSubscriptionUpdate:)]) {
+                [self.delegate cloudCore:self
+            didReceiveSubscriptionUpdate:queryEvent];
             }
             
             break;
@@ -203,6 +207,9 @@ CG_INLINE NSString * CCOStringFromClass(Class class) {
             
         case CKNotificationTypeRecordZone:
             
+            break;
+            
+        default:
             break;
     }
 }

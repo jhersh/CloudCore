@@ -57,6 +57,18 @@ describe(@"NSManagedObject Additions", ^{
         expect(recordID.recordName.length).to.beGreaterThan(0);
     });
     
+    it(@"does not generate IDs for temporary managed objects", ^{
+        Entity *entity = [Entity MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
+        
+        expect(^{ [entity cco_cloudKitRecordID]; }).to.raiseAny();
+    });
+    
+    it(@"does not generate cloudkit records for temporary managed objects", ^{
+        Entity *entity = [Entity MR_createEntityInContext:[NSManagedObjectContext MR_defaultContext]];
+        
+        expect(^{ [entity cco_recordRepresentationForCloudKitEntity:@"Entity"]; }).to.raiseAny();
+    });
+    
     it(@"can generate a cloudkit record for a managed object", ^{
         CKRecord *record = [entity cco_recordRepresentationForCloudKitEntity:@"Entity"];
         expect(record).toNot.beNil();
@@ -191,6 +203,27 @@ describe(@"CloudCore", ^{
         [w checkAccountStatus];
         
         [mockDelegate verifyWithDelay:3];
+    });
+    
+    it(@"does not call a delegate method after receiving an invalid subscription update", ^{
+        [[mockDelegate reject] cloudCore:widget
+            didReceiveSubscriptionUpdate:OCMOCK_ANY];
+        
+        NSDictionary *dict = @{};
+        
+        [widget receivedRemoteCloudKitNotification:dict];
+        
+        [mockDelegate verify];
+    });
+    
+    it(@"can start observing a managed object context", ^{
+        [widget startObservingChangesInContext:[NSManagedObjectContext MR_defaultContext]];
+        
+        expect(widget.observedContext).to.equal([NSManagedObjectContext MR_defaultContext]);
+        
+        [widget stopObservingManagedObjectContextChanges];
+        
+        expect(widget.observedContext).to.beNil();
     });
     
     it(@"calls a binding function when a context saves", ^{
