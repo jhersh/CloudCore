@@ -19,8 +19,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CKDatabase (CCODefaults)
 
+/**
+ * Returns the default public CloudKit database from the default CloudKit container.
+ */
 + (instancetype) cco_defaultPublicDatabase;
 
+/**
+ * Returns the default private CloudKit database from the default CloudKit container.
+ */
 + (instancetype) cco_defaultPrivateDatabase;
 
 @end
