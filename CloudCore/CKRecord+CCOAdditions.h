@@ -26,7 +26,7 @@ FOUNDATION_EXPORT NSString * const kCCORecordNameKey;
 
 @end
 
-@interface CKRecord (SPLReferences)
+@interface CKRecord (CCOReferences)
 
 /**
  * Create a CloudKit entity reference to the target managed object.
@@ -63,7 +63,7 @@ FOUNDATION_EXPORT NSString * const kCCORecordNameKey;
 
 @end
 
-@interface CKRecord (SPLQuerying)
+@interface CKRecord (CCOQuerying)
 
 /**
  * Fetch a record from CloudKit based on its local dictionary representation.

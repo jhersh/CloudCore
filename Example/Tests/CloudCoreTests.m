@@ -56,6 +56,13 @@ describe(@"NSManagedObject Additions", ^{
         expect(recordID).toNot.beNil();
         expect(recordID.recordName.length).to.beGreaterThan(0);
     });
+    
+    it(@"can generate a cloudkit record for a managed object", ^{
+        CKRecord *record = [entity cco_recordRepresentationForCloudKitEntity:@"Entity"];
+        expect(record).toNot.beNil();
+        expect(record.recordType).to.equal(@"Entity");
+        expect(record.recordID).to.equal([entity cco_cloudKitRecordID]);
+    });
 });
 
 describe(@"CKRecord Additions", ^{

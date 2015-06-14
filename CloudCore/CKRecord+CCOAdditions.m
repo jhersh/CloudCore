@@ -30,7 +30,7 @@ NSString * const kCCORecordNameKey = @"cco_recordName";
 
 @end
 
-@implementation CKRecord (SPLReferences)
+@implementation CKRecord (CCOReferences)
 
 - (void)cco_addReferenceForKey:(NSString *)key
                toManagedObject:(NSManagedObject *)object
@@ -57,7 +57,7 @@ NSString * const kCCORecordNameKey = @"cco_recordName";
 
 @end
 
-@implementation CKRecord (SPLQuerying)
+@implementation CKRecord (CCOQuerying)
 
 + (void)cco_recordFromDictionary:(NSDictionary *)dictionary
                       inDatabase:(CKDatabase *)database

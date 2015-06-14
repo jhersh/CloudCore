@@ -94,11 +94,11 @@ CG_INLINE NSString * CCOStringFromClass(Class class) {
 - (void)registerManagedObjectClass:(Class __nonnull)class
                  forCloudKitEntity:(NSString * __nonnull)entity
                   withBindingBlock:(CCOManagedObjectBindBlock __nonnull)bindingBlock {
-    CCOCloudManagedObject *object = [[CCOCloudManagedObject alloc] initWithClass:class
-                                                                       bindBlock:bindingBlock
-                                                                  cloudKitEntity:entity];
-    
-    self.registeredObjects[CCOStringFromClass(class)] = object;
+
+    self.registeredObjects[CCOStringFromClass(class)] = [[CCOCloudManagedObject alloc]
+                                                         initWithClass:class
+                                                         bindBlock:bindingBlock
+                                                         cloudKitEntity:entity];
 }
 
 - (NSArray *) _CKRecordsByBindingManagedObjects:(NSArray *)objects inDirection:(CCOBindDirection)direction {
