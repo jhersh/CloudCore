@@ -190,6 +190,7 @@ describe(@"CloudCore", ^{
     it(@"can be initialized with a container", ^{
         CCOCloudCore *w = [CCOCloudCore coreWithPublicDatabaseInContainer:[CKContainer defaultContainer]];
         expect(w.database).to.equal([CKContainer defaultContainer].publicCloudDatabase);
+        expect(w.container).to.equal([CKContainer defaultContainer]);
     });
     
     it(@"calls a delegate method after checking status", ^{

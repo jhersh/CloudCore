@@ -20,8 +20,6 @@ typedef NS_ENUM(NSUInteger, CCOBindDirection) {
     CCOBindDirectionCloudToLocal,
 };
 
-typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBindDirection);
-
 @protocol CCOCloudCoreDelegate;
 
 /**
@@ -100,6 +98,8 @@ typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBin
 
 #pragma mark - Managed Object Context Events
 
+typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBindDirection);
+
 @property (nonatomic, strong, readonly) NSManagedObjectContext *observedContext;
 
 - (void) registerManagedObjectClass:(Class)klass
@@ -125,6 +125,8 @@ typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBin
 @end
 
 @protocol CCOCloudCoreDelegate <NSObject>
+
+@optional
 
 /**
  * The account access status has been updated for a database.
