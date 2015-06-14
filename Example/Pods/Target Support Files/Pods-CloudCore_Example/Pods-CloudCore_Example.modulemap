@@ -1,6 +1,0 @@
-framework module Pods_CloudCore_Example {
-  umbrella header "Pods-CloudCore_Example-umbrella.h"
-
-  export *
-  module * { export * }
-}

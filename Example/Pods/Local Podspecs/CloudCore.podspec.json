@@ -1,14 +1,14 @@
 {
   "name": "CloudCore",
   "version": "0.1.0",
-  "summary": "Utilities to help CloudKit work with Core Data.",
-  "homepage": "https://github.com/splinesoft/SPLCloudKitWidget",
+  "summary": "Utilities for CloudKit and Core Data.",
+  "homepage": "https://github.com/jhersh/CloudCore",
   "license": "MIT",
   "authors": {
     "Jonathan Hersh": "jon@her.sh"
   },
   "source": {
-    "git": "https://github.com/splinesoft/SPLCloudKitWidget.git",
+    "git": "https://github.com/jhersh/CloudCore.git",
     "tag": "0.1.0"
   },
   "social_media_url": "https://twitter.com/jhersh",

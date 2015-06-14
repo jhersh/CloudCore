@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CloudCore: 2cc8623977e26cb72f9c1efc384746e86206319e
+  CloudCore: a3ffb578c85b746b90f6cbb0f50bd53ac2eb7003
   Expecta: 32604574add2c46a36f8d2f716b6c5736eb75024
   MagicalRecord: 89eb7d7ead39fb37f01c3d010665ee94d17f8dba
   OCMock: a10ea9f0a6e921651f96f78b6faee95ebc813b92
