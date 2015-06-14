@@ -1,0 +1,5 @@
+ci_service: circleci
+coverage_service: coveralls
+xcodeproj: Example/CloudCore.xcodeproj
+source_directory: CloudCore
+ci_access_token: ZArRq1s1AhH0nKBlL1M1EP3C7jezdEZn9
