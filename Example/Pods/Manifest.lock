@@ -1,0 +1,26 @@
+PODS:
+  - CloudCore (0.1.0)
+  - Expecta (1.0.0)
+  - MagicalRecord (2.3.0)
+  - OCMock (3.1.2)
+  - Specta (1.0.2)
+
+DEPENDENCIES:
+  - CloudCore (from `../`)
+  - Expecta
+  - MagicalRecord
+  - OCMock
+  - Specta
+
+EXTERNAL SOURCES:
+  CloudCore:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  CloudCore: 2cc8623977e26cb72f9c1efc384746e86206319e
+  Expecta: 32604574add2c46a36f8d2f716b6c5736eb75024
+  MagicalRecord: 89eb7d7ead39fb37f01c3d010665ee94d17f8dba
+  OCMock: a10ea9f0a6e921651f96f78b6faee95ebc813b92
+  Specta: 9cec98310dca411f7c7ffd6943552b501622abfe
+
+COCOAPODS: 0.37.2

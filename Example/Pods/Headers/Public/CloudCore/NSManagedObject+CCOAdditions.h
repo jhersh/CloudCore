@@ -1,0 +1,1 @@
+../../../../../CloudCore/NSManagedObject+CCOAdditions.h
