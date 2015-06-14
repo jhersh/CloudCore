@@ -79,8 +79,10 @@
     [self.container accountStatusWithCompletionHandler:^(CKAccountStatus status, NSError *error) {
         _lastKnownAccountStatus = status;
         
-        if (self.accountStatusCheckedBlock) {
-            self.accountStatusCheckedBlock(status, error);
+        if ([self.delegate respondsToSelector:@selector(cloudCore:accountStatusUpdated:error:)]) {
+            [self.delegate cloudCore:self
+                accountStatusUpdated:status
+                               error:error];
         }
     }];
 }

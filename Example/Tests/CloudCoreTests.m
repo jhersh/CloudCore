@@ -180,16 +180,17 @@ describe(@"CloudCore", ^{
         expect(w.database).to.equal([CKContainer defaultContainer].publicCloudDatabase);
     });
     
-    it(@"calls a callback after checking status", ^{
-        waitUntil(^(DoneCallback done) {
-            CCOCloudCore *widget = [CCOCloudCore coreWithDefaultPublicDatabase];
-            widget.accountStatusCheckedBlock = ^(CKAccountStatus status, NSError *error) {
-                expect(error).toNot.beNil();
-                done();
-            };
-            
-            [widget checkAccountStatus];
-        });
+    it(@"calls a delegate method after checking status", ^{
+        CCOCloudCore *w = [CCOCloudCore coreWithDefaultPublicDatabase];
+        w.delegate = (id <CCOCloudCoreDelegate>)mockDelegate;
+        
+        [[mockDelegate expect] cloudCore:w
+                    accountStatusUpdated:CKAccountStatusCouldNotDetermine
+                                   error:[OCMArg isNotNil]];
+
+        [w checkAccountStatus];
+        
+        [mockDelegate verifyWithDelay:3];
     });
     
     it(@"calls a binding function when a context saves", ^{

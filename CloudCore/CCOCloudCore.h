@@ -20,8 +20,6 @@ typedef NS_ENUM(NSUInteger, CCOBindDirection) {
     CCOBindDirectionCloudToLocal,
 };
 
-typedef void (^CCOAccountStatusCheckedBlock) (CKAccountStatus, NSError *);
-
 typedef void (^CCOQueryNotificationBlock) (CKQueryNotification *);
 
 typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBindDirection);
@@ -37,31 +35,31 @@ typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBin
 #pragma mark - Initializing
 
 /**
- * Create a @c CCOCloudCore using the default public databse in the default CloudKit
+ * Create a @c CCOCloudCore using the default public database in the default CloudKit
  * container.
  */
 + (instancetype) coreWithDefaultPublicDatabase;
 
 /**
- * Create a @c CCOCloudCore using the default private databse in the default CloudKit
+ * Create a @c CCOCloudCore using the default private database in the default CloudKit
  * container.
  */
 + (instancetype) coreWithDefaultPrivateDatabase;
 
 /**
- * Create a @c CCOCloudCore using the public databse in the specified CloudKit
+ * Create a @c CCOCloudCore using the public database in the specified CloudKit
  * container.
  */
 + (instancetype) coreWithPublicDatabaseInContainer:(CKContainer *)container;
 
 /**
- * Create a @c CCOCloudCore using the private databse in the specified CloudKit
+ * Create a @c CCOCloudCore using the private database in the specified CloudKit
  * container.
  */
 + (instancetype) coreWithPrivateDatabaseInContainer:(CKContainer *)container;
 
 /**
- * Create a @c CCOCloudCore using the specified databse in the specified CloudKit
+ * Create a @c CCOCloudCore using the specified database in the specified CloudKit
  * container.
  */
 - (instancetype) initWithDatabase:(CKDatabase *)database
@@ -96,14 +94,9 @@ typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBin
 @property (nonatomic, assign, readonly) CKAccountStatus lastKnownAccountStatus;
 
 /**
- * A block called when the application receives an account authorization result.
- * This is called after you call @c checkAccountStatus.
- */
-@property (nonatomic, copy) CCOAccountStatusCheckedBlock accountStatusCheckedBlock;
-
-/**
  * Initiate a check for the current account status, populating
- * @c lastKnownAccountStatus and calling your @c accountStatusCheckedBlock.
+ * @c lastKnownAccountStatus and calling the CCOCloudCoreDelegate method
+ * cloudCore:accountStatusUpdated:error.
  */
 - (void) checkAccountStatus;
 
@@ -119,13 +112,29 @@ typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBin
 
 #pragma mark - Notifications
 
+/**
+ * A block called when your application receives a remote notification
+ * that a CloudKit subscription has been updated.
+ */
 @property (nonatomic, copy) CCOQueryNotificationBlock queryNotificationBlock;
 
+/**
+ * Parse a remote notification dictionary. The notification will be parsed into
+ * a CloudKit notification and your @c queryNotificationBlock will be called.
+ * 
+ * @param notification the notification dictionary received by your application delegate.
+ * Pass the same dictionary that your app delegate received in 
+ * @c application:didReceiveRemoteNotification:fetchCompletionHandler:
+ */
 - (void)receivedRemoteCloudKitNotification:(NSDictionary *)notification;
 
 @end
 
 @protocol CCOCloudCoreDelegate <NSObject>
+
+- (void) cloudCore:(CCOCloudCore *)cloudCore
+accountStatusUpdated:(CKAccountStatus)status
+             error:(NSError *)error;
 
 - (void) cloudCore:(CCOCloudCore *)cloudCore
 didSaveRecordsToCloud:(NSArray *)savedRecords
