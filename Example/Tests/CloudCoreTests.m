@@ -80,6 +80,25 @@ describe(@"CKRecord Additions", ^{
         expect(reference.recordID).to.equal(record.recordID);
     });
     
+    it(@"can create reference relationships to a managed object", ^{
+        __block Entity *one, *two;
+        
+        [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+            one = [Entity MR_createEntityInContext:context];
+            two = [Entity MR_createEntityInContext:context];
+        }];
+        
+        CKRecord *record = [one cco_recordRepresentationForCloudKitEntity:@"Entity"];
+        
+        expect(record).toNot.beNil();
+        
+        [record cco_addReferenceForKey:@"key" toManagedObject:two action:CKReferenceActionDeleteSelf];
+        
+        expect(record[@"key"]).toNot.beNil();
+        expect(record[@"key"]).to.equal([[CKReference alloc] initWithRecordID:[two cco_cloudKitRecordID]
+                                                                       action:CKReferenceActionDeleteSelf]);
+    });
+    
     it(@"can create dictionary representations of records", ^{
         CKRecord *record = [[CKRecord alloc] initWithRecordType:@"RecordType"];
         record[@"key"] = @"value";

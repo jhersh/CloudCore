@@ -28,33 +28,83 @@ typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBin
 
 @protocol CCOCloudCoreDelegate;
 
+/**
+ * @c CCOCloudCore is a bridge between your local CoreData records and
+ * your remote CloudKit entities.
+ */
 @interface CCOCloudCore : NSObject
 
+#pragma mark - Initializing
+
+/**
+ * Create a @c CCOCloudCore using the default public databse in the default CloudKit
+ * container.
+ */
 + (instancetype) coreWithDefaultPublicDatabase;
 
+/**
+ * Create a @c CCOCloudCore using the default private databse in the default CloudKit
+ * container.
+ */
 + (instancetype) coreWithDefaultPrivateDatabase;
 
+/**
+ * Create a @c CCOCloudCore using the public databse in the specified CloudKit
+ * container.
+ */
 + (instancetype) coreWithPublicDatabaseInContainer:(CKContainer *)container;
 
+/**
+ * Create a @c CCOCloudCore using the private databse in the specified CloudKit
+ * container.
+ */
 + (instancetype) coreWithPrivateDatabaseInContainer:(CKContainer *)container;
 
+/**
+ * Create a @c CCOCloudCore using the specified databse in the specified CloudKit
+ * container.
+ */
 - (instancetype) initWithDatabase:(CKDatabase *)database
                       inContainer:(CKContainer *)container;
 
+/**
+ * The CloudKit database being managed by this adapter.
+ */
 @property (nonatomic, strong, readonly) CKDatabase *database;
 
+/**
+ * The CloudKit container being managed by this adapter.
+ */
 @property (nonatomic, strong, readonly) CKContainer *container;
 
+/**
+ * When saving local records to CloudKit, the record saving policy to use.
+ */
 @property (nonatomic, assign) CKRecordSavePolicy recordSavePolicy;
 
+/**
+ * The @c CCOCloudCoreDelegate is informed of CloudCore events.
+ */
 @property (nonatomic, weak) id <CCOCloudCoreDelegate> delegate;
 
 #pragma mark - CloudKit Account Status
 
+/**
+ * The last known CloudKit authorization status for this database.
+ * This is populated after you call @c checkAccountStatus.
+ */
 @property (nonatomic, assign, readonly) CKAccountStatus lastKnownAccountStatus;
 
+/**
+ * A block called when the application receives an account authorization result.
+ * This is called after you call @c checkAccountStatus.
+ */
 @property (nonatomic, copy) CCOAccountStatusCheckedBlock accountStatusCheckedBlock;
 
+/**
+ * Initiate a check for the current account status, populating
+ * @c lastKnownAccountStatus and calling your @c accountStatusCheckedBlock.
+ */
 - (void) checkAccountStatus;
 
 #pragma mark - Managed Object Context Events
