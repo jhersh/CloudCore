@@ -1,5 +1,5 @@
 //
-//  NSManagedObject+CCOAdditions.h
+//  NSManagedObject+CCOAdditions.m
 //  CloudCore
 //
 //  Created by Jonathan Hersh on 6/13/15.

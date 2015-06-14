@@ -1,5 +1,5 @@
 //
-//  CKRecord+CCOAdditions.h
+//  CKRecord+CCOAdditions.m
 //  CloudCore
 //
 //  Created by Jonathan Hersh on 6/13/15.
