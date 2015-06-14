@@ -64,6 +64,8 @@
         _container = container;
         _recordSavePolicy = CKRecordSaveIfServerRecordUnchanged;
         _registeredObjects = [NSMutableDictionary new];
+        
+        [self checkAccountStatus];
     }
     
     return self;
