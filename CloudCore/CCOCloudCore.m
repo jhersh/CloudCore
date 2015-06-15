@@ -134,10 +134,6 @@ CG_INLINE NSString * CCOStringFromClass(Class class) {
         return;
     }
     
-    if (self.lastKnownAccountStatus != CKAccountStatusAvailable) {
-        return;
-    }
-    
     NSMutableArray *deleteRecordIDs = [NSMutableArray new];
     
     for (NSManagedObject *object in userInfo[NSDeletedObjectsKey]) {

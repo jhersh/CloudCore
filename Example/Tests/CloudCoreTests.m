@@ -227,23 +227,23 @@ describe(@"CloudCore", ^{
         expect(widget.observedContext).to.beNil();
     });
     
-//    it(@"calls a binding function when a context saves", ^{
-//        waitUntil(^(DoneCallback done) {
-//            [widget registerManagedObjectClass:[Entity class]
-//                             forCloudKitEntity:@"Entity"
-//                              withBindingBlock:^(NSManagedObject *object, CKRecord *record, CCOBindDirection direction) {
-//                                  expect(object).to.beKindOf([Entity class]);
-//                                  expect(direction).to.equal(CCOBindDirectionLocalToCloud);
-//                                  [widget stopObservingManagedObjectContextChanges];
-//                                  done();
-//                              }];
-//
-//            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *context) {
-//                [widget startObservingChangesInContext:context];
-//                [Entity MR_createEntityInContext:context];
-//            }];
-//        });
-//    });
+    it(@"calls a binding function when a context saves", ^{
+        waitUntil(^(DoneCallback done) {
+            [widget registerManagedObjectClass:[Entity class]
+                             forCloudKitEntity:@"Entity"
+                              withBindingBlock:^(NSManagedObject *object, CKRecord *record, CCOBindDirection direction) {
+                                  expect(object).to.beKindOf([Entity class]);
+                                  expect(direction).to.equal(CCOBindDirectionLocalToCloud);
+                                  [widget stopObservingManagedObjectContextChanges];
+                                  done();
+                              }];
+
+            [MagicalRecord saveWithBlock:^(NSManagedObjectContext *context) {
+                [widget startObservingChangesInContext:context];
+                [Entity MR_createEntityInContext:context];
+            }];
+        });
+    });
 });
 
 
