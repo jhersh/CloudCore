@@ -129,7 +129,9 @@ typedef void (^CCOManagedObjectBindBlock) (NSManagedObject *, CKRecord *, CCOBin
 @optional
 
 /**
- * The account access status has been updated for a database.
+ * The account access status has been updated for the current CKDatabase.
+ * This method is called after manually invoking @c checkAccountStatus.
+ * This method is also called with a new status after the current user's iCloud identity changes.
  * 
  * @param cloudCore the object managing this database
  * @param status the new account status

@@ -66,6 +66,11 @@
         _registeredObjects = [NSMutableDictionary new];
         
         [self checkAccountStatus];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(checkAccountStatus)
+                                                     name:NSUbiquityIdentityDidChangeNotification
+                                                   object:nil];
     }
     
     return self;
@@ -73,6 +78,9 @@
 
 - (void)dealloc {
     [self stopObservingManagedObjectContextChanges];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSUbiquityIdentityDidChangeNotification
+                                                  object:nil];
 }
 
 #pragma mark - Account Status
