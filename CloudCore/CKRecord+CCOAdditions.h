@@ -22,7 +22,7 @@ FOUNDATION_EXPORT NSString * const kCCORecordNameKey;
  * Also included are @c kCCORecordTypeKey, the record's CloudKit entity type,
  * and @c kCCORecordNameKey, the record's unique record name.
  */
-- (NSDictionary *) cco_dictionaryRepresentation;
+@property (nonatomic, readonly) NSDictionary *cco_dictionaryRepresentation;
 
 @end
 

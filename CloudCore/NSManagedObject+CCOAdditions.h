@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Determine a record ID that uniquely identifies this managed object.
  */
-- (CKRecordID *) cco_cloudKitRecordID;
+@property (nonatomic, readonly) CKRecordID *cco_cloudKitRecordID;
 
 /**
  * Return a CKRecord representation of this managed object as a record of the
